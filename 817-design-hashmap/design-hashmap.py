@@ -1,17 +1,38 @@
 class MyHashMap:
 
     def __init__(self):
-        self.capacity=1000001
-        self.counter=[-1]*self.capacity
+        self.capacity=1000
+        self.counter=[[] for _ in range(self.capacity)]
+
+    def _hash(self,key):
+        return key%self.capacity
 
     def put(self, key: int, value: int) -> None:
-        self.counter[key]=value
+        counter_index=self._hash(key)
+        
+        for pair in self.counter[counter_index]:
+            if pair[0]==key:
+                pair[1]=value
+                return
+        
+        self.counter[counter_index].append([key,value])
+
 
     def get(self, key: int) -> int:
-        return self.counter[key]
+        counter_index=self._hash(key)
+
+        for pair in self.counter[counter_index]:
+            if pair[0]==key:
+                return pair[1]
+            
+        return -1
 
     def remove(self, key: int) -> None:
-        self.counter[key]=-1
+        counter_index=self._hash(key)
+        for i, pair in enumerate(self.counter[counter_index]):
+            if pair[0] == key:
+                del self.counter[counter_index][i]
+                return
 
    
 
