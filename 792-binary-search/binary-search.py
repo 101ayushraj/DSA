@@ -6,7 +6,7 @@ class Solution:
             mid=left+(right-left)//2
             if nums[mid]==target:
                 return mid
-            if nums[mid]<target:
+            elif nums[mid]<target:
                 left=mid+1
             elif nums[mid]>target:
                 right=mid-1
